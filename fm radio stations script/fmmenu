@@ -1,0 +1,62 @@
+#!/bin/sh
+while true; do
+clear
+echo -n " MENU Stathmon FM
+1. (E)nter Stathmo
+2. (M)odify stathmo
+3. (D)elete stahmo
+4. (S)earch Stathmo
+5. Display (A)ll
+6. (P)rint lista Stathmwn omadopoihmenwn kata glwssa kai eidos mousikis
+7. (F)ind oria mpantas FM (mikrotero-megalutero)
+8. E(x)it
+
+Give choice : "
+read choice
+case $choice in
+1|E|e) clear; echo "Enter Stathmo :"
+       echo -n "onoma stathmou    : "; read name
+       echo -n "Suxnotita : "; read freq
+       echo -n "eidos mousikis  : "; read music
+       echo -n "glossa : ";read glossa
+       echo -n "perioxh : "; read area
+       echo "$name^$freq^$music^$glossa^$area" >> fm.dat;;
+2|M|m) echo "Modify";read;;
+3|D|d) echo "Delete";read;;
+4|S|s) echo "search";read;;
+5|A|a) clear;
+       echo "Name       freq   music    glossa        area"
+       more fm.dat | tr "^" "  "
+       read;;
+6|P|p)clear
+       echo -n "dose glossa: "
+       read glossa
+       awk -F^ -v glossa=$glossa '$4==glossa' fm.dat>temp$$
+       awk -F^ '{A[$3]++}
+                END {for (i in A) print i,A[i]}' temp$$ > temp1$$
+       while read line; do
+        set $line
+        echo "Music type $1 has $2 statmous :"
+        echo "Name       freq   music    glossa        area"
+        awk -F^ -v music=$1 '$3==music' temp$$ | tr "^" "	"
+        echo ""
+       done < temp1$$ 
+       rm temp$$;rm temp1$$; read;;
+7|F|f) clear
+       upper=`awk -F^ '$2>max {max=$2; upper=$1}
+                           END {print upper}' fm.dat`
+       echo "upper FM Band limit Station is : " 
+       echo "Name       freq   music    glossa        area"
+       grep "$upper"  fm.dat | tr "^" "	"
+       lower=`awk -F^ 'BEGIN {min=9999999}
+                          $2<min {min=$2; lower=$1}
+                          END {print lower}' fm.dat`
+       echo "lower FM Band limit Station is : " 
+       echo "Name       freq   music    glossa        area"
+       grep "$lower" fm.dat | tr "^" "	"
+       read;;
+
+8|x|X) exit;;
+esac
+done
+

@@ -1,0 +1,155 @@
+kostrian is executing 2 comands
+the user shell is:/bin/sh
+the commands are the following
+ bx jfds aetos.irc.gr
+ bx asda irc.dal.net
+root is executing 29 comands
+the user shell is:/bin/sh
+the commands are the following
+ /etc/init
+ coalesced
+ /usr/etc/syslogd
+ /usr/sbin/cached
+ /usr/etc/portmap
+ /usr/etc/inetd -f
+  [ sshd1 ] 
+ /usr/etc/lpd
+ /usr/etc/lpd
+ /usr/local/addons/apache/bin/httpd
+ /sbin/cron
+ /usr/etc/amtickerd /var/adm/avail/lasttick 300
+ /usr/bin/X11/xdm
+ /usr/local/tac+/bin/tac_plus -C /usr/local/tac+/tac+.cfg -d 8 -d 16
+ /usr/local/sbin/sshd
+ /usr/local/addons/bind/sbin/named
+ ./twrapd
+ <defunct> 
+ /usr/lib/sendmail -bd -q15m
+ screen
+ /usr/etc/wrappers/tcpd ftpd -t900 -T901 -u027 -lll
+ /usr/etc/wrappers/tcpd ftpd -t900 -T901 -u027 -lll
+ /sbin/getty ttyd1 co_9600
+ /usr/local/tac+/bin/tac_plus -C /usr/local/tac+/tac+.cfg -d 8 -d 16
+ /usr/etc/wrappers/tcpd ftpd -t900 -T901 -u027 -lll
+ screen
+ /usr/local/tac+/bin/tac_plus -C /usr/local/tac+/tac+.cfg -d 8 -d 16
+ /usr/local/sbin/sshd
+ screen -dRR
+msav is executing 3 comands
+the user shell is:/bin/sh
+the commands are the following
+ ps -ef
+ -sh
+ -sh
+lp is executing 1 comands
+the user shell is:/bin/sh
+the commands are the following
+ /usr/lib/lpsched
+ /usr/etc/lpd
+ /usr/etc/lpd
+fouco is executing 2 comands
+the user shell is:/bin/sh
+the commands are the following
+ bin/datapipe 31987 6667 194.134.7.194
+ <defunct> 
+asvestas is executing 1 comands
+the user shell is:/bin/sh
+the commands are the following
+ ./ircd_koko
+UID is executing 1 comands
+the user shell is:the commands are the following
+     UID   PID  PPID  C    STIME TTY     TIME CMD
+leopard4 is executing 1 comands
+the user shell is:/bin/sh
+the commands are the following
+ /bin/sh
+www is executing 17 comands
+the user shell is:/bin/sh
+the commands are the following
+ /usr/local/addons/apache/bin/httpd
+ /usr/local/addons/apache/bin/httpd
+ /usr/local/addons/apache/bin/httpd
+ /usr/local/addons/apache/bin/httpd
+ /usr/local/addons/apache/bin/httpd
+ /usr/local/addons/apache/bin/httpd
+ /usr/local/addons/apache/bin/httpd
+ /usr/local/addons/apache/bin/httpd
+ /usr/local/addons/apache/bin/httpd
+ /usr/local/addons/apache/bin/httpd
+ /usr/local/addons/apache/bin/httpd
+ /usr/local/addons/apache/bin/httpd
+ /usr/local/addons/apache/bin/httpd
+ /usr/local/addons/apache/bin/httpd
+ /usr/local/addons/apache/bin/httpd
+ /usr/local/addons/apache/bin/httpd
+ /usr/local/addons/apache/bin/httpd
+v13 is executing 20 comands
+the user shell is:/bin/tcsh
+the commands are the following
+ /bin/tcsh
+ /bin/tcsh
+ ssh -l grnet ariadni.irc.gr
+ /bin/tcsh
+ dbxpcs -s 10419
+ dbx unproxy3 core3
+ /bin/sh ./run aetos
+ /bin/tcsh
+ /bin/tcsh
+ /bin/tcsh
+ /bin/tcsh
+ ./child_res
+ /bin/tcsh
+ tail -f aetos.log
+ /bin/tcsh
+ /bin/sh ./run
+ ./unproxy aetos
+ ./child_res
+ tail -f log2
+ ./rcached
+gkinig is executing 1 comands
+the user shell is:/bin/sh
+the commands are the following
+ ftpd -t900 -T901 -u027 -lll
+ddimarx is executing 7 comands
+the user shell is:/bin/sh
+the commands are the following
+ /usr/bin/perl nph-irc.cgi
+ /bin/sh
+ tcsh
+ tcsh
+ /bin/sh
+ /bin/sh
+ /usr/bin/perl nph-irc.cgi
+xxxx is executing 4 comands
+the user shell is:/bin/sh
+the commands are the following
+ tcsh
+ ./imask
+ tail -f imask.log
+ -sh
+athoik is executing 4 comands
+the user shell is:/bin/sh
+the commands are the following
+ pico lupe.js
+ -sh
+ tcsh
+ sftp-server
+dima is executing 1 comands
+the user shell is:/bin/tcsh
+the commands are the following
+ /usr/bin/perl nph-irc.cgi
+ /bin/sh
+ tcsh
+ tcsh
+ /bin/sh
+ /bin/sh
+ /usr/sysadm/bin/sysmgr
+ /usr/bin/perl nph-irc.cgi
+nygeion is executing 1 comands
+the user shell is:/bin/sh
+the commands are the following
+ ftpd -t900 -T901 -u027 -lll
+baspetr is executing 1 comands
+the user shell is:/bin/sh
+the commands are the following
+ ftpd -t900 -T901 -u027 -lll

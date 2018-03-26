@@ -1,0 +1,60 @@
+#!/bin/sh
+while true; do
+clear
+echo -n " aeroporiko taksidi MENU
+1. (E)nter  pelati 
+2. (M)odify pelati 
+3. (D)elete pelati 
+4. (S)earch pelati
+5. Display (A)ll
+6. (P)rint lista pelatwn ana ptisi
+7. E(x)it
+
+Give choice : "
+read choice
+case $choice in
+1|E|e) clear; echo "Enter pelati :"
+       echo -n "onoma taksidioti    : "; read name
+       echo -n "imerominia taksidiou  : "; read date 
+       echo -n "kodikos ptisis: "; read  code
+       echo -n "katigoria         : "; read class
+       echo -n "aerodromio         : "; read airport
+       echo "$name $date $code $class $airport" > temp
+       cost=`awk '{if($5=="A") cost1=250
+                  if ($5=="TH") cost1=200
+                  if($4=="B") 
+                   {cost=cost1*1.30}
+                  else
+                   {cost=cost1} 
+                  print cost}' temp` 
+       rm temp
+       echo $name^$date^$code^$class^$airport^$cost>> taksidi.dat;;
+2|M|m) echo "Modify";read;;
+3|D|d) echo "Delete";read;;
+4|S|s) echo "search";read;;
+5|A|a) clear;
+       echo "Name	date	code	class	airport	Cost"
+       more taksidi.dat | tr "^" "	"
+       read;;
+6|P|p)clear
+       echo -n "dose imerominia: "
+       read imerominia
+       awk -F^  -v imerominia=$imerominia '{if ($2==imerominia)
+                                          {A[$3]++}}
+                END {for (i in A) print i,A[i]}' taksidi.dat > temp
+       awk -F^ -v imerominia=$imerominia '$2==imerominia' taksidi.dat > taksidi1.dat
+        while read line; do
+        set $line
+        echo "ptisi $1 has $2 epibates :"
+        echo "Name	date	code	class	airport	Cost"
+        awk -F^ -v ptisi=$1 '$3==ptisi' taksidi1.dat | tr "^" "	"
+        echo ""
+       done < temp 
+       read
+#       rm temp
+#       rm taksidi1.dat
+;;
+7|x|X) exit;;
+esac
+done
+

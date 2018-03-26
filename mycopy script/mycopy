@@ -1,0 +1,105 @@
+#!/bin/bash
+
+#check if parameters are less than 2
+
+if [ "$#" -lt 2 ]; then
+echo "mycopy: use at least two parameters"
+exit 1
+
+#check if parameters are more than 2
+
+elif [ "$#" -gt 2 ]; then
+#find last parameter
+	for i in "$@"; do
+	:
+	done
+
+	lp=$i
+
+	# The last parameter can also be found with the command
+	# lp=`eval "echo \#$#"`
+	# which can be used for up to 9 parameters
+
+	# check if the last parameter is a directory
+
+	if [ -d "$lp" ];then
+
+	# start copying the files to directory
+
+		for i in "$@"; do
+			
+		    if [ "$i" != "$lp" ]; then
+
+			# check if source file exists
+			
+			if [ ! -f "$i" ]; then
+			echo "The file $i does not exist. Skipping...."
+			continue
+			fi
+
+			# check if target file exists
+			target1="$lp/$i"
+			if [ -f "$target1" ]; then
+				
+				while true; do
+					echo -n " The file $target1 exists. Overwrite?Yy/Nn: "
+					read answer
+					case "$answer" in
+					Y|y) cp "$i" "$lp"
+					     echo "file $target Overwriten"
+					     break;;
+					N|n) echo "File $target NOT overwritten"
+					     break;;
+					  *) echo "Unacceptable answer.Please give Yes:(Yy) or No:(Nn)"
+					  esac
+				done
+			else
+				cp "$i" "$lp"
+				echo "File $i copied"
+			fi
+		   fi
+		done
+	else
+		echo "last parameter: $lp must be a directory"
+		exit 1
+	fi
+else
+#exactly 2 parameters 
+
+	if [ ! -f $1 ]; then
+		echo "The file $1 does NOT exist"
+		exit 1
+	fi
+
+	#define target file
+
+	if [ -d "$2" ]; then
+		target="$2/$1"
+	else
+		target="$2"
+	fi
+
+# check if target file exists
+
+	if [ -f "$target" ]; then
+
+		while true; do
+
+			echo -n "The file $target exists. Overwrite? Yy/Nn: "
+			read answer
+
+			case "$answer" in
+			Y|y) cp "$1" "$target"
+		     	echo "File $target overwriten"
+		     	break;;
+			N|n) echo "File $target NOT overwritten"
+		     	break;;
+		  	*) echo "Wrong Reply. Give Yes(Yy) or No(Nn)";;
+			esac
+		done
+	else
+		cp "$1" "$target"
+		echo "file $1 copied"
+	fi
+fi 
+exit 0

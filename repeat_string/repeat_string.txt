@@ -1,0 +1,19 @@
+#!/bin/sh
+# This script repeats a string n (first parameter) times
+if [ $# -lt 2 ]; then
+    echo "The script needs at least 2 parameters"
+else
+    times="$1"
+    expr "$times" + 1 >/dev/null 2>&1
+    if [ $? -lt 2 ]; then 
+        echo "Parameter is numeric"
+        shift
+        while [ "$times" -gt 0 ]; do
+		echo ""$*""
+		times=`expr $times - 1`
+	done
+    else
+        echo "Second parameter is NOT numeric"
+    fi
+fi
+exit

@@ -1,0 +1,26 @@
+if [ $# -gt 1 ]; then
+	echo "Epitrepetai mono 1 parametros"
+elif [ $# -eq 0 ]; then
+echo "In elif"
+	katal="."
+else
+echo "In else"
+	if [ -d $1 ]; then
+		katal="$1"
+	else 
+		echo "O katalogos $1 den yparxei"
+		exit
+	fi
+fi
+sum=0
+ls -l "$katal" |grep "^d" > /tmp/subdirs$$
+while read line; do
+	IFS=" "
+	set $line
+	a=`du -sk $9`
+	IFS="	"
+	set $a
+	sum=`expr $sum + $1`
+done < /tmp/subdirs$$
+rm /tmp/subdirs$$
+echo "Total subdir size: $sum"

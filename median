@@ -1,0 +1,22 @@
+if [ $# -ne 1 ]; then
+  echo "usage : median file"
+else
+  if [ ! -f "$1" ]; then
+    echo "file $1 does not exist !"
+  else
+    sort -n "$1" | 
+    awk '{A[NR]=$0}
+    END { if (NR%2==1)
+          {
+	   m=int(NR/2)+1
+	   print A[m]
+	  }
+	  else
+	  {
+	   m=NR/2
+	   median=(A[m]+A[m+1])/2
+	   print median
+	  }
+    }' 
+  fi
+fi

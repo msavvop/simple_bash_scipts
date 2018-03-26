@@ -1,0 +1,13 @@
+#!/bin/sh
+if [ $# -ne 1 ]; then
+echo "Usage del _lines parameter"
+else
+ 	if [ -f $1 ]; then
+ 	 sed '1,7s/^.*$//' $1 > /tmp/temp$$
+	 mv /tmp/temp$$ $1
+	else
+	 echo "$1 does not exist"
+ 	fi
+fi
+exit
+

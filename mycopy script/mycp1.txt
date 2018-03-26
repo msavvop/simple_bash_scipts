@@ -1,0 +1,57 @@
+if [ $# -lt 2 ];then
+   echo "Wrong number of parameters"
+   elif [ $# -eq 2 ];then
+      if [ -d $2 ];then
+         if [ -f $2/$1 ];then
+            echo "File $1 exist in directory $2.Ovewrite(Y/N)?\c"
+            read reply
+            if [ $reply = 'y' -o $reply = 'Y' ];then
+               cp "$1" "$2/$1"
+               echo "file $1 copied to $2/$1 file"
+            else
+               echo "File not copied"
+            fi
+         else
+            cp "$1" "$2/$1"
+            echo "file $1 copied to $2/$1 file"
+         fi
+      elif [ -f $2 ];then
+         echo "File $2 exists.Overwrite(Y/N)?\c"
+         read reply
+         if [ $reply = 'y' -o $reply = 'Y' ];then
+            cp "$1" "$2"
+            echo "File $1 copied to file $2"
+         else 
+            echo "Not copied"
+         fi
+      else
+         cp "$1" "$2"
+         echo "File $1 copied to file $2"
+      fi
+   elif [ $# -gt 2 ];then
+      for i in $*;do
+         :
+      done
+      var=$i
+      if [ -d $var ];then
+         for i in $*;do
+            if [ \( -f $var/$i \) -a \( "$i" != "$var" \) ];then
+              echo "File $i exists. Ovewrite(Y/N)?\c"
+              read reply
+              if [ $reply = 'y' -o $reply = 'Y' ];then
+                 cp "$i" "$var/$i"
+                 echo "File $i copied to $var/$i"
+              else
+                 echo "File not copied"
+              fi
+            else
+             if [ "$i" != "$var" ]; then
+               cp "$i" "$var/$i"
+               echo "File $i copied to $var/$i"
+             fi
+            fi
+          done
+       else
+          echo "Wrong number of parameters"
+       fi
+fi     

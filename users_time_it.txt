@@ -1,0 +1,12 @@
+#!/bin/sh
+last|egrep -f usersit>lastit
+grep -v "still" lastit|awk 'NF==10 {$3="";print $0}
+NF!=10 {print $0}'|tr -s ''|sed 's/[()]//g' >lastit2
+awk '{split($9,time,":");time1=time[1];time2=time[2];sumh[$1]+=time1
+summ[$1]+=time2}
+END {for (i in sumh)
+{sumh[i]=sumh[i]+int(summ[i]/60);summ[i]=summ[i]-int(summ[i]/60)*60}
+for (i in sumh) print i,sumh[i],":",summ[i]}' lastit2>time_logged
+
+
+

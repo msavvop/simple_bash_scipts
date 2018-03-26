@@ -1,0 +1,18 @@
+ps -ef >psfile
+cat psfile|awk '{A[$1]++}
+END {for (i in A) print i,A[i]}'>usercommands
+if [ -f ps-stats.out ];then
+rm ps-stats.out
+fi
+while read line;do
+set $line
+echo "$1 is executing $2 comands">>ps-stats.out
+echo -n "the user shell is:">>ps-stats.out
+user=$1
+awk -F: -v user=$user '{if (user==$1) 
+{print $NF}}' /etc/passwd >>ps-stats.out
+echo "the commands are the following">>ps-stats.out
+grep "$user" psfile | sed 's/\(^.*[0-9]\)\(:\)\([0-9][0-9]\)\(.*$\)/\4/' >>ps-stats.out
+done<usercommands
+rm usercommands
+

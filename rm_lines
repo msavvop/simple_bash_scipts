@@ -1,0 +1,11 @@
+if [ $# -ne 1 ]; then
+  echo "usage:rev_lines filename"
+else
+    if [ ! -f "$1" ]; then
+       echo "File $1 does not exist"
+    else
+       sed -e '/^[ 	]*$/d'
+    fi
+fi
+exit
+

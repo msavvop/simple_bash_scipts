@@ -1,0 +1,64 @@
+# Ayto einai to programma xwris toys elegxoys
+ echo "dose arithmo-telesth-arithmo"
+ echo "h telesth-arithmo kai enter sketo  gia va suvexisete thv prajh"
+ echo " doste proto to END gia va termatistei to programma"
+ t1=""
+ mem=0
+while [ "$t1" != "END" ]; do
+echo "doste dedomeva"
+ read t1
+
+ if [ "$t1" != "END" ]; then
+  read t2
+  read t3
+  
+  echo "$t1" "$t2" "$t3" "$mem" > calctemp
+  
+# ta eisagwgika einai gia to "*"
+  awk '{if (NF==4)
+         {if ($1 ~ /[^0-9.-][^0-9.-]*/) 
+         {print  "ERROR", $1," should be number"
+         res=0
+         exit}
+         if ($3 ~ /[^0-9.-][^0-9.-]*/) 
+         {print  "ERROR", $3, "should be number"
+         res=0
+         exit}
+         n1=$1;n2=$3;pr=$2}
+        else 
+        {if ($2 ~ /[^0-9.-][^0-9.-]*/) 
+        {print  "ERROR", $2, "should be number"
+         res=0
+         exit}
+        n1=$3;n2=$2;pr=$1} 
+        res=0
+        if (pr=="+")
+          {res=n1+n2}
+        else
+        {if (pr=="-")
+         { res=n1-n2}
+        else 
+        {if (pr=="*") 
+        {res=n1*n2}
+        else
+        {if (pr=="/") 
+        {res=n1/n2}
+        else
+        {if (pr=="%") 
+        {res=n1%n2}
+        else
+        {print "ERROR NOT KNOWN CALCULATION"
+         res=0}
+         }}}}
+        print res}' calctemp > calcres
+ read res < calcres
+ echo "result="$res
+ awk '{if ($0 ~ /[^0-9.-][^0-9.-]*/) 
+      $0=0
+      print $0}' calcres >temp$$
+mv temp$$ calcres 
+read mem <calcres
+ rm calctemp
+ fi
+done
+echo "End of Program"

@@ -1,0 +1,12 @@
+tty4d1 -> /hw/ttys/tty4d1
+tty4d2 -> /hw/ttys/tty4d2
+tty4f1 -> /hw/ttys/tty4f1
+tty4f2 -> /hw/ttys/tty4f2
+ttyc1 -> /hw/ttys/ttyc1
+ttyc2 -> /hw/ttys/ttyc2
+ttyd1 -> /hw/ttys/ttyd1
+ttyd2 -> /hw/ttys/ttyd2
+ttyf1 -> /hw/ttys/ttyf1
+ttyf2 -> /hw/ttys/ttyf2
+ttym1 -> /hw/ttys/ttym1
+ttym2 -> /hw/ttys/ttym2

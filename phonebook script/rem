@@ -1,0 +1,45 @@
+#
+# Remove someone from the phone book
+#
+key=$1
+#
+# Get matching entries and save in temp file
+#
+grep "$key" $PHONEBOOK > /tmp/matches$$
+if [ ! -s /tmp/matches$$ ]; then
+        echo "Den yparxei sindromitis me stoixeia: $key"
+        exit 1
+fi
+
+#
+# Display matching entries one at a time and confirm removal
+#
+
+exec < /tmp/matches$$      # reassign standard input
+
+while read line; do
+       ./display "$line"
+        echo -n "Remove this entry <Y>es/<N>o:"
+
+          while true;do
+
+  read answer < /dev/tty
+
+        case "$answer" in
+        Y|y)  grep -v "^$line$" $PHONEBOOK > /tmp/phone$$
+              mv /tmp/phone$$ $PHONEBOOK
+              echo "Selected entry has been removed"
+  break;;
+        N|n)  echo "Selected entry has NOT been removed"
+  break;;
+          *)  echo -n "Unexpected reply, Give Yes(y|Y) or No(N|n)";;
+        esac
+
+          done
+
+done
+
+rm /tmp/matches$$
+
+# ===================================================================
+

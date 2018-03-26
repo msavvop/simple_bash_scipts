@@ -1,0 +1,26 @@
+#!/bin/sh
+if [ $# -ne 1 ]; then
+     echo "Usage user_space  parameter"
+else
+	>login.txt
+	uid=$1
+	grep ":$uid:" /etc/passwd > userfile 
+	while read user; do   
+          IFS=":"
+          set $user
+		if [ "$3" -eq "$uid" ]; then
+          		login=$1
+          		space=`du -sk $6`
+          		IFS="	"
+          		set $space
+          		echo "User $login ($uid) occupies $1 Kbs"
+			echo $login > login.txt
+   		fi
+	done<userfile
+	if [ ! -s login.txt ]; then
+		echo "UID $uid does not exist"
+	fi
+	rm login.txt
+fi
+exit
+

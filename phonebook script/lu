@@ -1,0 +1,19 @@
+#
+# Look someone in the phone book
+#
+key=$1
+grep "$key" "$PHONEBOOK" > /tmp/matches$$
+if [ ! -s /tmp/matches$$ ]; then
+        echo "Den yparxei sindromitis me stoixeia \"$key\" in the phone book"
+else
+        # Emafanisi eggrafwn mia-mia
+        while read line; do
+                ./display "$line"
+                echo
+                echo "Pateiste <Enter> gia ton epomeno sindromiti"
+                read dummy < /dev/tty
+        done < /tmp/matches$$
+fi
+
+rm /tmp/matches$$
+

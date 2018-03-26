@@ -1,0 +1,44 @@
+rindex=0
+windex=0
+xindex=0
+lindex=0
+dindex=0
+
+if [ -f home-out ]; then
+rm home-out
+fi
+
+for i in *;do
+if [ -r $i ]; then
+rindex=`expr $rindex + 1`
+echo "$i is readable">>home-out
+fi
+if [ -w $i ];then
+windex=`expr $windex + 1`
+echo "$i is writeable">>home-out
+fi
+if [ -x $i ] ;then
+xindex=`expr $xindex + 1`
+echo "$i is executable">>home-out
+fi
+if [ -d $i ]; then
+dindex=`expr $dindex + 1`
+echo "$i is a directory">>home-out
+fi
+if [ -l $i ];then
+lindex=`expr $lindex + 1`
+echo " $i is a soft link">>home-out
+fi
+
+ls -l| awk -v file1=$i '{if (file1==$9)
+{print  file1," size is ", $5}}'>>home-out
+
+ls -l| awk -v file1=$i '{if (file1==$9)
+{print  file1, " was created in ", $6,$7,$8}}'>>home-out
+done
+
+echo "there are $rindex readable files">>home-out
+echo "there are $windex writeable files">>home-out
+echo "there are $xindex executable files">>home-out
+echo "there are $dindex directores">>home-out
+echo "there are $lindex soft links">>home-out

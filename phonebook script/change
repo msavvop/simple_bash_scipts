@@ -1,0 +1,45 @@
+#Change an entry in the phone book
+#
+key=$1
+#
+# Get matching entries
+#
+grep "$key" $PHONEBOOK > /tmp/matches$$
+if [ ! -s /tmp/matches$$ ]; then
+        echo "I can't find $key in the phone book"
+        exit 1
+fi
+#
+# Display matching entries one at a time and confirm change
+#
+exec < /tmp/matches$$
+while read line; do
+        ./display "$line"
+
+        echo "Change this entry (Yy/Nn): \c"
+
+          while true; do
+        read answer < /dev/tty
+
+        if [ \( "$answer" = "y" \) -o \( "$answer" = "Y" \) ]; then
+                grep -v "^$line$" $PHONEBOOK > /tmp/phone$$
+                mv /tmp/phone$$ $PHONEBOOK
+                ./add < /dev/tty
+                    break
+        elif [ \( "$answer" = "n" \) -o \( "$answer" = "N" \) ]; then
+                echo "Entry NOT changed"
+                    break
+          else
+                    echo -n "Wrong reply. Give yes(Y|y) or No(N|n)"
+        fi
+
+          done
+
+done
+
+rm /tmp/matches$$
+
+
+rm /tmp/matches$$
+
+# ==================================================================

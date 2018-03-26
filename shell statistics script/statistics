@@ -1,0 +1,21 @@
+if [ $# -ne 1 ];then
+echo "usage: statistics parameter"
+exit
+fi
+
+kelifos=$1
+awk -F: -v kelifos=$kelifos '{
+if ($7~kelifos)
+{print $1}
+if ($1~/root/)
+{print "o root exei",$7}
+shells[$7]++}
+END {for(shell in shells)
+print shell, (shells[shell]/NR)*100}' /etc/passwd>shells$$
+if grep -w  "$kelifos" shells$$>/dev/null;then
+cat shells$$
+else
+echo 'To shell pou pliktrologisate den uparxei'
+fi
+rm shells$$
+

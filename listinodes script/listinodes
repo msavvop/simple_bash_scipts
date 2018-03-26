@@ -1,0 +1,27 @@
+#!/bin/sh
+
+
+if [ $# -ne 1 ]; then
+	echo "usage: listinodes directory" 1>&2
+	exit 1
+	# To plhthos twn orismatwn einai diaforo tou 1
+fi
+dir=$1;
+if [ ! -d $dir ]; then
+	echo "The argument $dir is not directory or does not exists" 1>&2
+	exit 1
+fi
+
+stat $dir/* | awk '
+	BEGIN			{ 	files=0;directories=0;} # Arxikopoihsh (den einai ypoxreotiki)
+	$1 ~ /File:/ 	{	printf("%s ",$2);} 		# To onoma tou arxeiou
+	$3 ~ /Filetype:/ {	if($4=="Directory") { directories++;} 
+						else {files++}			# O typos tou arxeiou (dir h oxi)
+					} 
+	$3 ~ /Inode:/ 	{	print $4;} 				# To inode number
+	END				{	# Emfanisi sygketrotikwn
+						print "Number of Files",files; 
+						print "Number of directories" , directories;
+					}'| tr -d \"
+
+

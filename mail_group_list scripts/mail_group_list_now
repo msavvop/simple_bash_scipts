@@ -1,0 +1,23 @@
+if [ $# -ne 1 ]; then
+   echo "usage: listgroup groupname"
+      exit 1
+      fi
+
+      var1=`grep "$1:" /etc/group|sed 's/\(^[^:]*:\)\([^:]*:\)\([^:]*:\)\(.*$\)/:\3/'`
+
+      if [ "$var1" = "" ];then
+      echo "group not found!"
+      exit 1
+      fi
+who|sed 's/ .*//'>now_users
+grep "$var1" /etc/passwd | grep -f now_users |awk -F: '{print $1,$5}'>users
+while read line;do
+set $line
+login=$1
+name=$2
+ echo "Dear $name this is a test message for the unix exam">output_now
+ mail $login <output_now
+ cat output>>output_all_mails_now
+done<users
+ 
+

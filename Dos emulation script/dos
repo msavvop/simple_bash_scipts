@@ -1,0 +1,48 @@
+while true;do
+directory=`pwd`
+echo -n "dos%$directory>"
+read commands
+set $commands
+entoli=$1
+case $entoli in
+ren|rename) mv $2 $3;;
+
+copy) shift
+ cp "$@";;
+
+move) shift
+ mv "$@";;
+
+del) shift 
+rm $@;;
+
+dir) if [ $3 ]; then
+  if [ \( $3 == "/P" \) -o \( $3 == "/p" \) ];then
+   ls $2|more
+  else
+   echo 'usage: dir directory /p'
+  fi
+ elif [ $2 ];then
+  if [ \( $2 == "/P" \) -o \( $2 == "/p" \) ];then
+   ls|more
+  else
+   ls $2
+  fi
+ else
+  ls
+ fi;;
+
+exit) exit;;
+
+cd) cd $2;;
+
+help) echo "available commands:dir,copy,rename(ren),move,del,cd,exit,help,rd,md";;
+
+md) mkdir $2;;
+
+rd) rmdir $2;;
+
+*) echo "available commands:dir,copy,rename(ren),move,del,cd,exit,help,rd,md";;
+esac
+
+done

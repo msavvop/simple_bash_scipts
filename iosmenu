@@ -1,0 +1,52 @@
+#!/bin/sh
+while true; do
+clear
+echo -n " MENU gnoston ion
+1. (E)nter io 
+2. (M)odify io
+3. (D)elete io
+4. (S)earch io
+5. Display (A)ll
+6. (P)rint lista ion poy prosbaloun to arxeio
+7. E(x)it
+
+Give choice : "
+read choice
+case $choice in
+1|E|e) clear; echo "Enter io :"
+       echo -n "onoma iou    : "; read name
+       echo -n "typos iou : "; read tipos
+       echo -n "imerominia emfanisis  : "; read date 
+       echo -n "molismena pc : ";read infected
+       echo -n "tipos arxeion poy prosbalei : "; read filetype
+       echo "$name $tipos $date $infected $filetype" > temp
+       dangindex=`awk '{if($2=="V") index1=1
+                  if ($2=="T") index1=2
+                  if ($2=="W") index1=3
+                  if(($3=="2002")||($3=="2001")) 
+                   {index2=index1+0.5}
+                  else
+                   {index2=index1}
+                  index3=index2+0.1*$4 
+                  print index3}' temp` 
+       rm temp
+       echo "$name^$tipos^$date^$infected^$filetype^$dangindex" >> ios.dat;;
+2|M|m) echo "Modify";read;;
+3|D|d) echo "Delete";read;;
+4|S|s) echo "search";read;;
+5|A|a) clear;
+       echo "Name	typos	date	infected	filetype	index"
+       more ios.dat | tr "^" "	"
+       read;;
+6|P|p)clear
+       echo -n "dose onoma arxeiou: "
+       read onoma
+       echo "Name	typos	date	infected	filetype	index"
+       awk -F^  -v onoma=$onoma '{split(onoma,name,"\.")
+                 if ($5==name[2]) print $0}' ios.dat|tr "^" "	"
+read
+;;
+7|x|X) exit;;
+esac
+done
+

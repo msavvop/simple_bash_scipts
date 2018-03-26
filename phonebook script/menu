@@ -1,0 +1,86 @@
+#
+#!/bin/sh
+#
+# Phone Catalog program to look up, add, remove and
+#	change entries from the phone book
+#
+# Set PHONEBOOK to point to the phone book file
+# and export it so other progs know about it
+# if it's set on entry, then leave it alone
+#
+
+# : ${PHONEBOOK:=$HOME/UNIXLAB/phonebook}
+: ${PHONEBOOK:=./phonebook}
+export PHONEBOOK
+
+if [ ! -f "$PHONEBOOK" ]; then 
+	echo "$PHONEBOOK does not exist or is not an ordinary file!"
+	echo "Should I create it for you (Y/N)? \c"
+	read answer
+	if [ "$answer" != "y" ]; then
+		echo "Telos programmatos"
+		exit 1
+	fi
+	> $PHONEBOOK || exit 1
+fi
+
+#
+# If arguments are supplied, then do a lookup
+#
+if [ "$#" -ne 0 ]; then
+	./lu "$@"
+	exit
+fi
+
+#
+# Loop until user selects 'exit'
+#
+while true; do
+	# Display menu
+	echo '
+
+                       M E N U
+
+		1. Anazitisi sindromiti
+		2. Pros8esi sindromiti
+		3. Diagrafi sindromiti
+		4. Metavoli stoixeiwn sindromiti
+		5. Emafanisi olwn
+		6. Telos programmatos
+
+		Dwste epilogi (1-6): \c'
+
+	# Read and process selection
+	read choice
+	case "$choice" in
+		1|A|a) echo "Dwste stoixeia pros anazitisi: \c"
+			read key
+			if [ -z "$key" ]; then
+				echo "Den dwsate stoixeia. H anazitisi agnoeitai"
+			else
+				./lu "$key"
+			fi;;
+		2|P|p) ./add;;
+		3|D|d) echo "Dwste stoixeia sindromitwn pros diagrafi: \c"
+			read key
+			if [ -z "$key" ]; then
+				echo "Den dwsate stoixeia. H diagrafi agnoeitai"
+			else
+				./rem "$key"
+			fi;;
+		4|M|m) echo "Dwste stoixeia sindromiti pros metavoli: \c"
+			read key
+			if [ -z "$key" ]; then
+				echo "Den dwsate stoixeia. H metavoli agnoeitai"
+			else
+				./change "$key"
+			fi;;
+		5|E|e)./listall;;
+		6|T|t) echo "Telos programmatos"; exit 0;;
+		    *) echo "Bad choice\007\007\007";;
+	esac
+	echo 
+	echo "Press <Enter> to continue ..."
+	read dummy
+	clear
+done

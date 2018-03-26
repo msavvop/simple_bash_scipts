@@ -1,0 +1,24 @@
+if [ $# -ne 1 ]; then
+   echo "usage: listgroup groupname"
+      exit 1
+      fi
+
+      var1=`grep "$1:" /etc/group|sed 's/\(^[^:]*:\)\([^:]*:\)\([^:]*:\)\(.*$\)/:\3/'`
+
+      if [ "$var1" = "" ];then
+      echo "group not found!"
+      exit 1
+      fi
+who|sed 's/ .*//'>users_now
+grep "$var1" /etc/passwd |grep -f users_now| awk -F: '{print $1,$6}'>users
+
+while read line;do
+set $line
+login=$1
+home=$2
+xwros=`du -sk $2`
+set $xwros
+echo $login uses $1 Mb of space on the disk and his home directory is $home>>xwros_output_now
+done<users
+ 
+

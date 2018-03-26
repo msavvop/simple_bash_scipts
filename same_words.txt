@@ -1,0 +1,33 @@
+if [ $# -gt 3 ]; then
+    echo "The program uses only the first three parameters"
+    a=$1; b=$2; c=$3
+elif [ $# -eq 2 ]; then
+  echo "You have entered two parameters"
+  echo "Please enter the third parameter: \c"
+  read c
+  a=$1; b=$2
+elif [ $# -eq 1 ]; then
+  echo "you have entered one parameter"
+  echo "Please enter the other two parameters: \c"
+  read b c
+  a=$1
+elif [ $# -eq 0 ]; then
+  echo "You have not entered any parameters "
+  echo "Please enter three parameters: \c"
+  read a b c 
+else
+  a=$1; b=$2; c=$3
+fi
+
+if [ "$a" = "$b" -a "$b" = "$c" ]; then
+  echo " the parameters are all the same"
+elif [ "$a" = "$b" ]; then
+  echo " The 1rst and  2nd parameters are the same"
+elif [ "$c" = "$b" ]; then
+  echo " The 2nd and third parameters are the same"
+elif [ "$a" = "$c" ]; then
+  echo " The 1st and 3rd parameters are the same"
+else
+  echo "No parameters are the same"
+fi
+

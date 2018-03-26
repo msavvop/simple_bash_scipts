@@ -1,0 +1,243 @@
+# =======================================================================
+#
+# Filename: menu
+#
+#!/bin/sh
+#
+# rolodex program to look up, add, remove and
+#	change entries from the phone book
+#
+# Set PHONEBOOK to point to the phone book file
+# and export it so other progs know about it
+# if it's set on entry, then leave it alone
+#
+
+: ${PHONEBOOK:=$HOME/UNIXlab/phonebook}
+export PHONEBOOK
+
+if [ ! -f "$PHONEBOOK" ]; then 
+	echo "$PHONEBOOK does not exist or is not an ordinary file!"
+	echo "Should I create it for you (Y/N)? \c"
+	read answer
+	if [ "$answer" != "y" ]; then
+		echo "Telos programmatos"
+		exit 1
+	fi
+	> $PHONEBOOK || exit 1
+fi
+
+#
+# If arguments are supplied, then do a lookup
+#
+if [ "$#" -ne 0 ]; then
+	lu "$@"
+	exit
+fi
+
+#
+# Loop until user selects 'exit'
+#
+while true; do
+	# Display menu
+	echo '
+
+                       M E N U
+
+		1. Anazitisi sindromiti
+		2. Pros8esi sindromiti
+		3. Diagrafi sindromiti
+		4. Metavoli stoixeiwn sindromiti
+		5. Emafanisi olwn
+		6. Telos programmatos
+
+		Dwste epilogi (1-6): \c'
+
+	# Read and process selection
+	read choice
+	case "$choice" in
+		1|A|a) echo "Dwste stoixeia pros anazitisi: \c"
+			read key
+			if [ -z "$key" ]; then
+				echo "Den dwsate stoixeia. H anazitisi agnoeitai"
+			else
+				lu "$key"
+			fi;;
+		2|P|p) add;;
+		3|D|d) echo "Dwste stoixeia sindromitwn pros diagrafi: \c"
+			read key
+			if [ -z "$key" ]; then
+				echo "Den dwsate stoixeia. H diagrafi agnoeitai"
+			else
+				rem "$key"
+			fi;;
+		4|M|m) echo "Dwste stoixeia sindromiti pros metavoli: \c"
+			read key
+			if [ -z "$key" ]; then
+				echo "Den dwsate stoixeia. H metavoli agnoeitai"
+			else
+				change "$key"
+			fi;;
+		5|E|e) listall;;
+		6|T|t) echo "Telos programmatos"; exit 0;;
+		    *) echo "Bad choice\007\007\007";;
+	esac
+	echo 
+	echo "Press <Enter> to continue ..."
+	read dummy
+	clear
+done
+
+# ======================================================================
+#
+# Filename: lu
+#
+# Look someone in the phone book
+#
+key=$1
+grep "$key" "$PHONEBOOK" > /tmp/matches$$
+if [ ! -s /tmp/matches$$ ]; then
+        echo "Den yparxei sindromitis me stoixeia \"$key\" in the phone book"
+else
+        # Emafanisi eggrafwn mia-mia
+        while read line; do
+                display "$line"
+		echo 
+		echo "Pateiste <Enter> gia ton epomeno sindromiti"
+		read dummy < /dev/tty
+        done < /tmp/matches$$
+fi
+
+rm /tmp/matches$$
+# ==============================================================
+#
+# Filename: display
+#
+# Display entry from the phonebook
+#
+echo 
+echo "----------------------------------------"
+entry=$1
+IFS="^"
+set $entry
+
+for line in "$1" "$2" "$3" "$4" "$5" "$6"; do
+        echo
+        echo "                                       |\r| $line"
+done
+
+echo "        O                     O        "
+echo "----------------------------------------"
+echo
+# =======================================================================:q
+#
+# Filename: add
+#
+# Program to add someone to the phonebook file
+#
+echo "Type in your new entry"
+echo "When you're done, type a single RETURN on the line."
+
+first=
+entry=
+while true; do
+        echo ">> \c"
+        read line
+        if [ -n "$line" ]; then
+                entry="$entry$line^"
+                if [ -z "$first" ]; then
+                        first=$line
+                fi
+        else
+                break
+        fi
+done
+echo "$entry" >> $PHONEBOOK
+sort -o $PHONEBOOK $PHONEBOOK
+echo
+echo "$first has been added to the phone book"
+
+# ========================================================================
+#
+# Filename: rem
+#
+# Remove someone from the phone book
+#
+key=$1
+#
+# Get matching entries and save in temp file
+#
+grep "$key" $PHONEBOOK > /tmp/matches$$
+if [ ! -s /tmp/matches$$ ]; then
+        echo "Den yparxei sindromitis me stoixeia: $key"
+        exit 1
+fi
+
+#
+# Display matching entries one at a time and confirm removal
+#
+
+exec < /tmp/matches$$      # reassign standard input
+
+while read line; do
+        display "$line"
+        echo "Remove this entry <Y>es/<N>o : \c"
+        read answer < /dev/tty
+        if [ "$answer" = "y" ]; then
+                if grep -v "^$line$" $PHONEBOOK > /tmp/phone$$ ; then
+                        mv /tmp/phone$$ $PHONEBOOK
+                        echo "Selected entry has been removed"
+                fi
+        else 
+                echo "Selected entry has NOT been removed"
+        fi
+done
+
+rm /tmp/matches$$
+
+# ========================================================================
+#
+# Filename: change
+#
+# Change an entry in the phone book
+#
+key=$1
+#
+# Get matching entries 
+#
+grep "$key" $PHONEBOOK > /tmp/matches$$
+if [ ! -s /tmp/matches$$ ]; then
+        echo "I can't find $key in the phone book"
+        exit 1
+fi
+#
+# Display matching entries one at a time and confirm change
+#
+exec < /tmp/matches$$
+while read line; do
+        display "$line"
+        echo "Change this entry (y/n): \c"
+        read answer < /dev/tty
+        if [ "$answer" = "y" ]; then
+                grep -v "^$line$" $PHONEBOOK > /tmp/phone$$
+                mv /tmp/phone$$ $PHONEBOOK
+                add < /dev/tty
+        else 
+                echo "Entry NOT changed"
+        fi
+done
+
+rm /tmp/matches$$
+
+# ==================================================================
+#
+# Filename: listall
+#
+# list all of the entries in the phone book
+#
+echo "--------------------------------------------------------"
+while read line; do
+        echo $line |tr "^" "    "
+        echo
+done < $PHONEBOOK
+echo "--------------------------------------------------------"
+

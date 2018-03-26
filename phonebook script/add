@@ -1,0 +1,29 @@
+#
+# Program to add someone to the phonebook file
+#
+echo "Type in your new entry"
+echo "When you're done, type a single RETURN on the line."
+
+first=""
+
+while true; do
+        echo ">> \c"
+        read line
+        if [ -n "$line" ]; then
+                entry="$entry$line^"
+                if [ -z "$first" ]; then
+                        first=$line
+                fi
+        else
+                break
+        fi
+done
+if [ -n "$entry" ];then
+echo "$entry" >> $PHONEBOOK
+sort -o $PHONEBOOK $PHONEBOOK
+echo
+echo "$first has been added to the phone book"
+else
+echo "No data was given"
+fi
+# ====================

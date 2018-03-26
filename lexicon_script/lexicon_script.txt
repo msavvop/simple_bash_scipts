@@ -1,0 +1,24 @@
+#!/bin/sh 
+if [ $# -ne 2 ]; then
+echo "usage : lexicon_script parameter1 parameter2"
+else
+	if [ !  -f $1 ]; then
+          	echo "$1 lexicon does not exist"
+
+	elif [ !  -f $2 ]; then
+		echo "$2 file does not exist"
+	else
+lexicon=$1
+keimeno=$2
+		while read line ; do
+			set $line
+		 	for i  in "$@"; do 
+				cat "$lexicon"|grep "^$i$" >/tmp/word$$
+			 	if [ ! -s /tmp/word$$ ]; then
+				  echo "$i not in lexicon">>errors
+				fi
+			done
+		done<"$keimeno"
+		sort -u -o errors errors
+	fi
+fi

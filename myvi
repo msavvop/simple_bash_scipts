@@ -1,0 +1,38 @@
+#!/bin/sh
+if [ $# -ne 1 ] ; then
+ echo "usage : myvi <filename>"
+else
+ while true; do
+ clear
+ echo -n "  My vi MENU for file $1
+  1. Insert Line
+  2. Delete Line
+  3. Exit
+
+  enter choice : " 
+ read choice
+ case $choice in 
+ 1|i|I) echo -n "Enter Line Number : "
+        read ln
+        echo -n "Enter Line : "
+        read line
+        vi $1 << ! 1>/dev/null
+${ln}Go${line}^[
+:wq
+!
+        echo "Line successfully inserted"
+        cat $1;;
+ 2|d|D) echo -n "Enter Line Number : "
+           read ln
+           vi $1 << ! 1>/dev/null
+${ln}Gdd:wq
+!
+        echo "Line Successfully deleted"
+        cat $1;;
+ 3|e|E) exit 0;;
+ *) echo "wrong command ...";;
+ esac
+ echo "press enter for menu ..."
+ read
+ done
+fi

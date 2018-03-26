@@ -1,0 +1,58 @@
+eisodos=$1
+eksodos=$2
+if [ $# -ne 2 ]; then
+  echo "Usage vathmi data results"
+  exit
+fi
+if [ ! -f $1 ];then
+  echo "file $1 does not exist"
+  exit
+fi
+cond1="true"
+# broxos epanalhptikhs ekteleshs se periptwsh sfalmatos
+while $cond1;do
+ if [ -f error$$ ];then
+     rm error$$
+ fi
+ awk '{
+ if ($1 ~ /[^a-zA-Z][^a-zA-Z]*/)
+ {printf ("%s %s %s  %i\n","ERROR:", $1, "is not a name  line=", NR) }
+ if ($2 ~ /[^a-zA-Z][^a-zA-Z]*/)
+ {printf ("%s %s %s  %i\n","ERROR:", $2, "is not a name  line=", NR) }
+ if($3 !~ /T[123]/)
+ {printf ("%s %s %s  %i\n","ERROR:", $3, "does not exist  line=", NR) }
+ if($4 ~ /[^0-9.][^0-9.]*/)
+ {printf ("%s %s %s  %i\n","ERROR:", $4, "is not a number  line=", NR) }
+ meanadd[$3]+=$4
+ number[$3]++
+ if ($4>=5) perasav[$3]++
+ else kophkav[$3]++
+ }
+ END {for (tmhma in meanadd)
+ {mesosoros[tmhma]=meanadd[tmhma]/number[tmhma]
+ print tmhma," M.O.=",mesosoros[tmhma], " Perasan:",perasav[tmhma]," Kopikan:",kophkav[tmhma]}
+ }' $1 > $2
+ # Elegxos gia sfalmata
+ grep "ERROR" $2>error$$
+ # Enhmerwsh ths synthikis
+ cond1="[ -s error$$ ]"
+ # broxos epanalhptikhs diorthwshs lathwn
+ while read line; do
+  set $line
+  # Eyresh toy arithmoy grammhs me sfalma
+  record1=`eval echo \$"$#"`
+  echo "record1= $record1"
+  # Emfanish toy sfalmatos
+  echo $line
+  # Emfanishs ths antistoixhs grammhs toy arxeioy eisodoy
+  sed  -n "${record1}p" $eisodos
+  echo "give which data to replace"
+  read error</dev/tty
+  echo "give the correct  data to replace"
+  read correct</dev/tty
+  # diortwsh toy sfalmatos
+  sed "$record1 s/$error/$correct/" $eisodos > eisodos$$
+  # Apokatastash toy arxeioy eisodoy
+  mv eisodos$$ $eisodos
+ done<error$$
+done

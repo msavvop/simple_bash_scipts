@@ -1,0 +1,96 @@
+ a6 is a soft link
+a6  size is  2
+a6  was created in  Mar 19 2000
+dev-char is readable
+dev-char is writeable
+dev-char  size is  6275
+dev-char  was created in  Mar 9 11:01
+dev-link is readable
+dev-link is writeable
+dev-link  size is  956
+dev-link  was created in  Mar 9 11:01
+dev-stats is readable
+dev-stats is writeable
+dev-stats is executable
+dev-stats  size is  265
+dev-stats  was created in  Mar 9 11:01
+flagsfp.dat is readable
+flagsfp.dat is writeable
+flagsfp.dat  size is  161600
+flagsfp.dat  was created in  Apr 8 2000
+fp is readable
+fp is writeable
+fp is executable
+fp  size is  137544
+fp  was created in  Apr 8 2000
+fp.for is readable
+fp.for is writeable
+fp.for  size is  78395
+fp.for  was created in  Mar 29 2000
+groupusersdir is readable
+groupusersdir is writeable
+groupusersdir  size is  0
+groupusersdir  was created in  Sep 5 2001
+home-stats is readable
+home-stats is writeable
+home-stats is executable
+home-stats  size is  942
+home-stats  was created in  Mar 9 11:15
+initfp.dat is readable
+initfp.dat is writeable
+initfp.dat  size is  978
+initfp.dat  was created in  Mar 29 2000
+laser.dim is readable
+laser.dim is writeable
+laser.dim  size is  106
+laser.dim  was created in  Mar 29 2000
+mail is readable
+mail is writeable
+mail is executable
+mail is a directory
+mail  size is  69
+mail  was created in  Sep 21 09:23
+mailspace is readable
+mailspace is writeable
+mailspace is executable
+mailspace  size is  384
+mailspace  was created in  Sep 5 2001
+output is readable
+output is writeable
+output  size is  16121
+output  was created in  Mar 4 19:38
+parameters is readable
+parameters is writeable
+parameters is executable
+parameters  size is  46
+parameters  was created in  Oct 25 02:27
+ps-stats is readable
+ps-stats is writeable
+ps-stats is executable
+ps-stats  size is  412
+ps-stats  was created in  Mar 4 19:38
+psfile is readable
+psfile is writeable
+psfile  size is  4886
+psfile  was created in  Mar 4 19:38
+public_html is readable
+public_html is writeable
+public_html is executable
+public_html is a directory
+public_html  size is  12288
+public_html  was created in  Jan 28 01:21
+unix is readable
+unix is writeable
+unix is executable
+unix is a directory
+unix  size is  4096
+unix  was created in  Jan 16 2001
+usercommands is readable
+usercommands is writeable
+usercommands  size is  105
+usercommands  was created in  Mar 4 19:38
+there are 19 readable files
+there are 19 writeable files
+there are 9 executable files
+there are 3 directores
+there are 1 soft links

@@ -1,0 +1,43 @@
+#!/bin/sh
+
+cat /etc/passwd| awk -F: '
+		{group_count[$4]++;} 
+	END {	for (gid in group_count) {
+				printf("%s %d\n",gid,group_count[gid]);
+			} 
+		}' > $$.txt
+# To $4 einai to group_id, kathe fora pou to synantoume auksanoume ton antistoixo counter kata ena.
+cat /etc/group | awk -F: '
+	$4!=""	{ 	split($4,group_users,","); 
+				for(user in group_users) {
+					group_count[$3]++;
+				}
+			} 
+	END 	{	for (gid in group_count) {
+					printf("%s %d\n",gid,group_count[gid]);
+				}
+			}' >> $$.txt
+# To $3 einai to group_id, kathe fora pou to synantoume, metrame posoi xrhstes einai dhlwmenoi (xwrismenoi me komma), kai gia kathe enan xrhsth auksanoume ton antistoixo counter kata ena.
+
+cat $$.txt | awk '
+			{	group[$1] += $2;} 
+	END 	{	for (gid in group) {
+					printf("%s %d\n",gid,group[gid]);
+				} 
+			}' > $$-merged.txt
+# Metrame sygketrotika ta melh tou group.
+
+rm -f $$.txt  # Den xreiazetai pleon
+
+
+while read line; do
+	set $line
+	gid=$1
+	numberusers=$2
+	# Se mia grammh eixame "gid number_of_users" kai to xwrizoume
+	groupname=`grep :$gid: /etc/group|awk -F: '{print $1}'`
+		# briskoume to onoma tou group apo to group_id
+	echo "$groupname $numberusers"
+done < $$-merged.txt
+
+rm -f $$-merged.txt

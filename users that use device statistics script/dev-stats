@@ -1,0 +1,47 @@
+ls -l /dev  >dev-temp
+cat dev-temp| grep "^c">dev-char
+cat dev-temp| grep "^l">dev-link
+cat dev-temp| grep "^b">dev-block
+awk '{a[$3]++}
+END {for ( user in a) print user,  a[user]}' dev-link>link-users
+
+awk '{a[$3]++}
+END {for ( user in a) print user,  a[user]}' dev-char>char-users
+
+awk '{a[$3]++}
+END {for ( user in a) print user,  a[user]}' dev-block>block-users
+
+while read line;do
+echo $line>>char-out
+echo "_________">>char-out
+set $line
+user=$1
+grep "$user" dev-char|awk '{print $NF}'>>char-out
+echo "*************">>char-out
+done<char-users
+
+
+while read line;do
+echo $line>>link-out
+echo "_________">>link-out
+set $line
+user=$1
+grep "$user" dev-link|awk '{print $9,$10,$11}'>>link-out
+echo "*************">>link-out
+done<link-users
+
+
+while read line;do
+echo $line>>block-out
+echo "_________">>block-out
+set $line
+user=$1
+grep "$user" dev-block|awk '{print $NF}'>>block-out
+echo "*************">>block-out
+done<block-users
+
+mv char-out dev-char
+mv link-out dev-link
+mv block-out dev-block
+rm dev-temp
+

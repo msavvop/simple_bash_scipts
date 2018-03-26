@@ -1,0 +1,11 @@
+if [ $# -ne 1 ]; then
+   echo "usage:rev_lines filename"
+else
+  if  [ ! -f "$1" ]; then
+       echo "file $1 does not exist"
+  else
+       grep -n '.*' $1 | sort -n -r | sed 's/^.*://'
+  fi
+fi
+exit
+ 

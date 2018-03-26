@@ -1,0 +1,16 @@
+#!/bin/sh
+if [ $# -ne 1 ];then
+   echo "Usage: rev_vowels filename"
+else
+   if [ -s "$1" ];then
+         grep "^[^aeiou]*u[^aeiou]*o[^aeiou]*i[^aeiou]*e[^aeiou]*a[^aeiou]*$" "$1">temp
+       if [ -s temp ]; then
+             cat temp
+       else
+	     echo "Den yparxoun lekseis me ta fonienta se anapodi seira"
+       fi
+   else
+      echo "To arxeio $1 den yparxei 'h exei mideniko mege8os"
+   fi
+fi
+

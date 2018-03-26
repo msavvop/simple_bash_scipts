@@ -1,0 +1,55 @@
+if [ "$#" -lt 2 ]; then
+ echo "Lathos arithmos parametrwn!!"
+elif [ "$#" -eq 2 ]; then 
+  if [ ! -f "$1" ]; then 
+   echo "Source file does not exists"
+  elif [ -d "$2" ]; then
+   if [ -f "$2"/"$1" ]; then
+    echo "Target file exists overwrite? (Y/N)"
+    read ans
+    if [ "$ans" = "Y" -o "$ans" = "y" ]; then
+     cp $1 $2
+     echo "Succesful copy into the directory $2"
+     else echo "Unsuccesful copy"
+    fi
+   else 
+    cp $1 $2
+    echo "Succesful copy into the directory $2 "
+   fi
+   elif [ -f "$2" ]; then
+    echo "Target file exists overwrite? (Y/N)"
+    read ans
+     if [ "$ans" = "Y" -o "$ans" = "y" ]; then
+     cp $1 $2
+     echo "Copy succesful"
+     else echo "Unsuccesful copy"
+fi
+else 
+
+cp $1 $2
+
+    fi
+else
+   var=`eval "echo \$"$#""` 
+   if [ -d "$var" ]; then 
+    for i in "$@"; do 
+     if [ "$i" != "$var" ]; then
+    if [ -f "$var"/"$i" ]; then 
+    echo "Target file exists overwrite? (Y/N)"
+    read ans
+    if [ "$ans" = "Y" -o "$ans" = "y" ]; then
+     cp $i $var
+     echo "Succesful copy into the directory $var"
+     else 
+     echo "Unsuccesful copy"
+    fi
+   else 
+    cp $i $var
+    echo "Succesful copy into the directory $var "
+   fi
+     fi
+    done
+   else
+    echo "Last parameter must directory !!"
+  fi 
+fi

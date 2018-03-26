@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# To --no-headers einai gia na min bgalei h ps titlous stin eksodo.
+ps -Ao "user vsz comm" --no-headers| awk '
+			{	user_memory[$1] += $2; # $1 einai o xrhsths
+				total +=$2; 	# $2 einai to megethos ths mnimis
+				processes++;	#Kathe grammi exei mia process
+			} 
+	END 	{	for (user in user_memory) {
+					printf("%8s %2.2f%%\n",user,100*user_memory[user]/total);
+					users++;
+				} 
+				print "Number of Users:", users; 
+				print "Number of processes:",processes;
+				print "Total memory used:",total;
+			}'
+

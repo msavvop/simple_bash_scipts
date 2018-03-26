@@ -1,0 +1,5 @@
+/bin/sync 20%
+/bin/bash 20%
+/bin/sh 20%
+/sbin/halt 20%
+/sbin/shutdown 20%

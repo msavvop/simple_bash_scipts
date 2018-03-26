@@ -1,0 +1,52 @@
+ not in lexicon
+! not in lexicon
+"$@"; not in lexicon
+"$1 not in lexicon
+"$2 not in lexicon
+"$i not in lexicon
+"$lexicon"|grep not in lexicon
+"^$i$" not in lexicon
+"usage not in lexicon
+#!/bin/sh not in lexicon
+$# not in lexicon
+$1 not in lexicon
+$2 not in lexicon
+$line not in lexicon
+/tmp/word$$ not in lexicon
+: not in lexicon
+; not in lexicon
+[ not in lexicon
+]; not in lexicon
+>/tmp/word$$ not in lexicon
+2 not in lexicon
+cat not in lexicon
+do not in lexicon
+does not in lexicon
+done not in lexicon
+done<"$keimeno" not in lexicon
+echo not in lexicon
+else not in lexicon
+errors not in lexicon
+errors not in lexicon
+exist" not in lexicon
+-f not in lexicon
+fi not in lexicon
+file not in lexicon
+i not in lexicon
+if not in lexicon
+in not in lexicon
+keimeno=$2 not in lexicon
+lexicon">>errors not in lexicon
+lexicon_script not in lexicon
+lexicon=$1 not in lexicon
+-ne not in lexicon
+not not in lexicon
+-o not in lexicon
+parameter1 not in lexicon
+parameter2" not in lexicon
+read not in lexicon
+-s not in lexicon
+set not in lexicon
+sort not in lexicon
+then not in lexicon
+-u not in lexicon

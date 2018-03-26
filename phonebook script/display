@@ -1,0 +1,18 @@
+#
+# Display entry from the phonebook
+#
+echo
+echo "----------------------------------------"
+entry=$1
+IFS="^"
+set $entry
+
+for line in "$@"; do
+        echo
+        echo "                                       |\r| $line"
+done
+
+echo "        O                     O        "
+echo "----------------------------------------"
+echo
+# ===================================================================

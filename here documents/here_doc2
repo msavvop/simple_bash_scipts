@@ -1,0 +1,5 @@
+#!/bin/sh
+vi $1 << ! 1>/dev/null 2>/dev/null
+:%s/$2/$3/:wq
+cat here.txt
+!

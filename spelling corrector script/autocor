@@ -1,0 +1,52 @@
+if [ $# -ne 2 ]; then  
+ echo 'Usage: autocor <filename> <lexiko>'
+exit 
+fi
+ if [ ! -f $1 ];then
+   echo "File $1 des not exist "
+ elif [ ! -f $2 ];then
+     echo "File $2 des not exist "
+ else 
+     >lexiko$$
+     file=$1
+     lex=$2
+     n=0
+     cp $file filetemp
+     while read line; do
+        n=`expr $n + 1`
+        set $line
+        for i in $*; do
+          cat "$lex" | grep "^$i$" > temp
+          correct=$i 
+          tempword=$i
+          while [ ! -s temp ];do 
+             echo "word $correct  wrong, Please Enter it "
+             echo "Or press enter to accept it anyway"
+             read correct</dev/tty
+             if [ -z $correct ]; then
+             echo "Should I add $tempword to $lex?"
+             read answer</dev/tty
+             if [ \( $answer = "y" \) -o \( $answer = "Y" \) ];then
+             echo "Addind $tempword to $lex and continuing"
+             echo "$tempword">>$lex
+             else
+             echo " accepting $tempword but not adding it to $lex"
+             echo "$tempword">>$lex
+             echo "$tempword">>lexiko$$
+             fi  
+             break
+             else
+             grep $correct  $lex>temp
+             tempword=$correct
+             fi
+
+            done
+            sed ""$n"s/$i/$tempword/" filetemp > filetemp$$
+            mv filetemp$$ filetemp             
+         done
+     done<"$file"
+     mv filetemp "$file"
+     grep -v -f lexiko$$ $lex>templex
+     mv templex $lex
+     rm lexiko$$
+    fi

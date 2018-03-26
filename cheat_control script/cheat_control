@@ -1,0 +1,32 @@
+#!/bin/sh
+
+if [ $# -eq 0 ]; then 
+cond1="true"
+elif [ $# -eq 1 ]; then
+max_counts=`expr $1 \/ 5`
+cond1="true"
+else 
+echo "usage cheat_control parameter"
+exit
+fi
+
+last | grep "still " | egrep 'paris|menelaos|eleni' | sed 's/ .*//'> students.exam
+
+counter=1
+while $cond1;do
+echo $counter
+ps -ef|egrep -f students.exam | awk 'NF>7 {$5=""
+$7=""
+print $0}'|tr -s "[ 	]"|fgrep -f susp_com >>suspect.log
+ps -ef| awk 'NF>7 {$5="" 
+$7=""
+print $0}'|tr -s "[ 	]"|egrep "mv|cp" |egrep "susp_com|cheat_control|students.exam">>suspect.log
+
+cat suspect.log|grep -v www|sort|uniq -u>>/tmp/temp$$
+mv /tmp/temp$$ suspect.log
+sleep 5
+counter=`expr $counter + 1`
+if [ $# -eq 1 ];then
+cond1="[ "$counter" -le "$max_counts" ]"
+fi
+done

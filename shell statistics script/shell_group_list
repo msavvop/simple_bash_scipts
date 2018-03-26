@@ -1,0 +1,16 @@
+if [ $# -ne 1 ]; then
+   echo "usage: listgroup groupname"
+      exit 1
+      fi
+
+      var1=`grep "$1:" /etc/group|sed 's/\(^[^:]*:\)\([^:]*:\)\([^:]*:\)\(.*$\)/:\3/'`
+
+      if [ "$var1" = "" ];then
+      echo "group not found!"
+      exit 1
+      fi
+grep "$var1" /etc/passwd | awk -F: '{print $1,$7}'| awk '{array[$2]++}
+END {for (i in array) 
+{array[i]=(array[i]/NR)*100
+printf ("%s %s%s", i , array [i],"%")
+printf("\n")}}' >shells_output

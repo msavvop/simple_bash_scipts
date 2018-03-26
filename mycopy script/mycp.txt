@@ -1,0 +1,80 @@
+#
+# The following shell script implements "mycp"
+#
+#Check if parameters are less than 2
+if [ "$#" -lt 2 ]; then
+    echo "mycp: use at least two parameters"
+    echo
+#Check if parameters are more than 2
+elif [ "$#" -gt 2 ]; then
+    #find last parameter
+    for i in "$@"; do
+        :
+    done
+    lp=$i
+
+    # The last parameter can also be found with the command 
+    # lp=`eval echo \$"$#"`
+    # which can be used for up to 9 parameters
+
+    # Check if last parameter is a directory
+    if [ -d "$lp" ]; then
+       # Copying all files to directory(last parameter)
+       for i in "$@"; do
+           if [ "$i" != "$lp" ]; then
+               # Check if source file exists
+               if [ ! -s "$i" ]; then
+                   echo "The file $i does not exists."
+               # Check if target file exists
+               elif [ -s "$lp/$i" ]; then
+                   while true; do
+                       echo "The file $lp/$i exists. Do you want to everwrite(Y/N):\c "
+                       read reply
+                       case "$reply" in
+                          Y|y) echo "mycp: Overwriting file $lp/$i with file $i" 
+                               echo
+                               cp "$i" "$lp"
+                               break;;
+                          N|n) echo  "mycp: file $lp/$i is not copied"
+                               echo
+                               break;;
+                            *) echo 'Wrong reply. Please give (Y)es or (N)o'
+                       esac
+                   done
+               else
+                   cp "$i" "$lp"
+               fi
+           fi
+       done
+    else 
+       echo "mycp: last parameter($lp) must be a directory, when \"No_of_params>2\""
+       echo
+    fi
+# Exactly 2 parameters
+else
+    # Check if source file exists
+    if [ ! -s $1 ]; then
+        echo "The file $1 does not exists."
+        exit
+    fi
+    # Check if target file exists
+    if [ -s $2 ]; then
+        while true; do
+            echo "The file $2 exists. Do you want to everwrite(Y/N):\c "
+            read reply
+            case "$reply" in
+               Y|y) echo "mycp: Overwriting file $2 with file $1" 
+                    echo
+                    cp "$1" "$2"
+                    break;;
+               N|n) echo "mycp: Copy cancelled"
+                    echo
+                    break;;
+                 *) echo 'Wrong reply. Please give (Y)es or (N)o'
+            esac
+        done
+    else
+        cp "$1" "$2"
+    fi
+fi
+exit

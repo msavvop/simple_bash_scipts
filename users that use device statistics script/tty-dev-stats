@@ -1,0 +1,17 @@
+ls -l /dev |grep "tty*" |grep -v "systt*" >dev-temp
+cat dev-temp| grep "^c">dev-char
+cat dev-temp| grep "^l"|sed 's/\(^.*\)\( \)\(tty.*$\)/\3/' >dev-link 
+awk '{a[$3]++}
+END {for ( user in a) print user,  a[user]}' dev-char>dev-users
+
+while read line;do
+echo $line>>dev.out
+echo "_________">>dev.out
+set $line
+user=$1
+grep "$user" dev-char|sed 's/\(^.*\)\( \)\(tt.*$\)/\3/'>>dev.out
+echo "*************">>dev.out
+done<dev-users
+mv dev.out dev-char
+rm dev-temp
+

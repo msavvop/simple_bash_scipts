@@ -1,0 +1,26 @@
+if [ $# -ne 1 ]; then 
+echo "hellosript parameter"
+exit
+fi
+
+name=$1
+
+awk -F: -v name=$name '{
+first=substr(name,1,1)
+rest=substr(name,2)
+first=toupper(first)
+name1=sprintf("%s%s",first,rest)
+split($5,names," ")
+if ((names[1]==name)||(names[1]==name1)||(names[2]==name)||(names[2]==name1))
+{print $1}}' /etc/passwd>names
+
+if [ ! -s names ]; then
+echo "there is no $1  in the system"
+exit
+fi
+while read login;do
+mail $login<hello.txt
+echo "mail has been send to $login"
+done<names
+rm names
+

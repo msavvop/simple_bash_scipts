@@ -1,0 +1,23 @@
+mkdir \.trash 2>/dev/null
+if [ $# -eq 0 ]; then 
+echo "usage: trash1 -d[elete] -e[mpty] -r[estore] -l[ist] -h[elp] [files]"
+exit
+fi
+cmd=$1
+shift
+if [ "$cmd" = "-d" ]; then
+mv $@ \.trash
+elif [ "$cmd" = "-r" ]; then
+position=`pwd`
+cd \.trash
+mv $@ $position 
+elif [ "$cmd" = "-e" ]; then
+rm -rf \.trash
+elif [ "$cmd" = "-l" ];then
+ls \.trash
+elif [ "$cmd" = "-h" ]; then
+echo "usage: trash1 -d[elete] -e[mpty] -r[estore] -l[ist] -h[elp] [files]"
+else
+echo "usage: trash1 -d[elete] -e[mpty] -r[estore] -l[ist] -h[elp] [files]"
+fi
+ 

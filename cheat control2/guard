@@ -1,0 +1,13 @@
+#!/bin/sh
+counter=0
+while [ $counter -le 1160 ]; do
+ps -ef|awk 'NF>7 {$5=""
+$7=""
+print $0}'|tr -s "[ 	]"|fgrep -f commands1>>cheat
+
+cat cheat|grep -v www|sort|uniq -u>>/incoming/temp$$
+mv /incoming/temp$$ cheat
+sleep 10
+counter=`expr $counter + 1`
+echo $counter
+done
